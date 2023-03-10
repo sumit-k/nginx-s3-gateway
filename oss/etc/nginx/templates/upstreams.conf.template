@@ -2,6 +2,7 @@
 resolver ${DNS_RESOLVERS};
 
 upstream storage_urls {
+    keepalive 128; #The number of idle keepalive connections to an upstream server that remain open for each worker process.
     # Upstreams are not refreshed until NGINX configuration is reloaded.
     # NGINX Plus will dynamically reload upstreams when DNS records are changed.
 
