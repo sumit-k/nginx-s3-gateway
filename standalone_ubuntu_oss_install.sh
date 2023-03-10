@@ -258,7 +258,7 @@ ExecStartPre=/usr/local/bin/template_nginx_config.sh
 EOF
 systemctl daemon-reload
 
-echo "▶ Creating NGINX configuration for S3 Gateway"
+echo "▶ Creating NGINX configuration for S3 Gateway.. 1"
 mkdir -p /etc/nginx/include
 mkdir -p /etc/nginx/conf.d/gateway
 mkdir -p /etc/nginx/templates/gateway
@@ -289,6 +289,8 @@ load_module modules/ngx_http_xslt_filter_module.so;
 # Preserve S3 environment variables for worker threads
 EOF
 
+
+echo "▶ Creating NGINX configuration for S3 Gateway.. 2"
 # Only include these env vars if we are not using a instance profile credential
 # to obtain S3 permissions.
 if [ $uses_iam_creds -eq 0 ]; then
@@ -301,7 +303,9 @@ EOF
 env S3_SESSION_TOKEN;
 EOF
 fi
+fi
 
+echo "▶ Creating NGINX configuration for S3 Gateway .. 3"
 cat >> /etc/nginx/nginx.conf << 'EOF'
 env S3_BUCKET_NAME;
 env S3_SERVER;
@@ -347,6 +351,7 @@ http {
 }
 EOF
 
+echo "▶ Creating NGINX configuration for S3 Gateway .. 4"
 download "common/etc/nginx/include/listing.xsl" "/etc/nginx/include/listing.xsl"
 download "common/etc/nginx/include/s3gateway.js" "/etc/nginx/include/s3gateway.js"
 download "common/etc/nginx/templates/default.conf.template" "/etc/nginx/templates/default.conf.template"
