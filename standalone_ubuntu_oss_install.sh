@@ -254,6 +254,7 @@ mkdir -p /etc/systemd/system/nginx.service.d
 cat > /etc/systemd/system/nginx.service.d/override.conf << 'EOF'
 [Service]
 EnvironmentFile=/etc/nginx/environment
+Restart=always
 ExecStartPre=/usr/local/bin/template_nginx_config.sh
 EOF
 systemctl daemon-reload
